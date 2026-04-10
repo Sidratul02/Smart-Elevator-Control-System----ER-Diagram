@@ -1,4 +1,4 @@
-# Elevator Management System - Database Schema
+# Smart Elevator Control
 
 ## Overview
 This project contains the Entity-Relationship (ER) diagram and database schema for a comprehensive **Elevator Management and Dispatch System**. It tracks building infrastructure, elevator operations, maintenance records, and ride assignments.
