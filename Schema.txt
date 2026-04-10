@@ -1,0 +1,93 @@
+// Static Infrastructure
+Building [icon: building, color: blue] {
+  building_id string pk
+  name string
+  location string
+  type string
+}
+
+Floor [icon: layers, color: blue] {
+  floor_id string pk
+  building_id string fk
+  floor_number int
+}
+
+Elevator_Shaft [icon: box, color: blue] {
+  shaft_id string pk
+  building_id string fk
+  shaft_number int
+}
+
+Elevator [icon: arrow-up-circle, color: green] {
+  elevator_id string pk
+  building_id string fk
+  shaft_id string fk
+  capacity int
+  current_floor int
+}
+
+// Junction Table
+Elevator_Floor_Map [icon: git-merge, color: purple] {
+  id string pk
+  elevator_id string fk
+  floor_id string fk
+}
+
+// Dynamic Request Data
+Floor_Request [icon: bell, color: orange] {
+  request_id string pk
+  floor_id string fk
+  request_time timestamp
+  direction string
+  status string
+}
+
+Ride_Assignment [icon: navigation, color: orange] {
+  ride_id string pk
+  request_id string fk
+  elevator_id string fk
+  assigned_time timestamp
+  pickup_time timestamp
+  drop_time timestamp
+  status string
+}
+
+// Operational Tracking
+Ride_Log [icon: file-text, color: yellow] {
+  log_id string pk
+  elevator_id string fk
+  start_floor int
+  end_floor int
+  start_time timestamp
+  end_time timestamp
+}
+
+Elevator_Status [icon: activity, color: yellow] {
+  status_id string pk
+  elevator_id string fk
+  status string
+  updated_at timestamp
+}
+
+Maintenance_Record [icon: tool, color: red] {
+  maintenance_id string pk
+  elevator_id string fk
+  issue_description string
+  start_date timestamp
+  end_date timestamp
+  status string
+}
+
+// Relationships
+Building.building_id < Floor.building_id
+Building.building_id < Elevator_Shaft.building_id
+Building.building_id < Elevator.building_id
+Elevator_Shaft.shaft_id - Elevator.shaft_id
+Elevator.elevator_id < Elevator_Floor_Map.elevator_id
+Floor.floor_id < Elevator_Floor_Map.floor_id
+Floor.floor_id < Floor_Request.floor_id
+Floor_Request.request_id - Ride_Assignment.request_id
+Elevator.elevator_id < Ride_Assignment.elevator_id
+Elevator.elevator_id < Ride_Log.elevator_id
+Elevator.elevator_id < Elevator_Status.elevator_id
+Elevator.elevator_id < Maintenance_Record.elevator_id
